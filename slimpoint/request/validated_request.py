@@ -34,7 +34,7 @@ def validated_request(method, url, expect, desc='', session=None, *args, **kwarg
     session = session or requests.Session()
 
     try:
-        resp = session.request(method, url=url, *args, verify=False, **kwargs)
+        resp = session.request(method, url=url, *args, verify=True, **kwargs)
     except ConnectionError:
         raise SlimpointException(f'Unable to connect to {url}. Is it available?')
 
