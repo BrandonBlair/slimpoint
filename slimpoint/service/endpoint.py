@@ -45,9 +45,7 @@ class Endpoint(object):
         return self._request(method='delete', *args, qs_args=qs_args, expect=expect, **kwargs)
 
     def _request(self, method, *args, qs_args, **kwargs):
-        print("qs_args: ", qs_args)
         url = self._url_with_query_string(qs_args) if qs_args else self.url
-        print("Processed url is ", url)
         resp = validated_request(
             url=url,
             method=method,
