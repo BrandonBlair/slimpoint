@@ -30,22 +30,24 @@ class Endpoint(object):
         return url
 
     def get(self, *args, qs_args=None, expect=200, **kwargs):
-        return self._request(method='get', *args, qs_args=None, expect=expect, **kwargs)
+        return self._request(method='get', *args, qs_args=qs_args, expect=expect, **kwargs)
 
     def post(self, *args, qs_args=None, expect=200, **kwargs):
-        return self._request(method='post', *args, qs_args=None, expect=expect, **kwargs)
+        return self._request(method='post', *args, qs_args=qs_args, expect=expect, **kwargs)
 
     def put(self, *args, qs_args=None, expect=200, **kwargs):
-        return self._request(method='put', *args, qs_args=None, expect=expect, **kwargs)
+        return self._request(method='put', *args, qs_args=qs_args, expect=expect, **kwargs)
 
     def patch(self, *args, qs_args=None, expect=200, **kwargs):
-        return self._request(method='patch', *args, qs_args=None, expect=expect, **kwargs)
+        return self._request(method='patch', *args, qs_args=qs_args, expect=expect, **kwargs)
 
     def delete(self, *args, qs_args=None, expect=200, **kwargs):
-        return self._request(method='delete', *args, qs_args=None, expect=expect, **kwargs)
+        return self._request(method='delete', *args, qs_args=qs_args, expect=expect, **kwargs)
 
     def _request(self, method, *args, qs_args, **kwargs):
+        print("qs_args: ", qs_args)
         url = self._url_with_query_string(qs_args) if qs_args else self.url
+        print("Processed url is ", url)
         resp = validated_request(
             url=url,
             method=method,

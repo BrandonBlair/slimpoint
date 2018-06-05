@@ -88,12 +88,17 @@ def test_endpoint_requests():
         resp = test_endpoint.delete()
         assert resp.status_code == success_status
 
+
 def test_endpoint_with_query_string():
     sessn = Session()
     test_endpoint = Endpoint(base_url=test_base_url)
 
-    with RequestsMock() as get_resp:
-        get_resp.add(GET, url=test_endpoint.url, status=success_status)
+    arg_key = 'arg_key'
+    arg_value = 'arg_value'
+    url_w_args = f'{test_endpoint.url}?{arg_key}={arg_value}'
 
-        resp = test_endpoint.get(session=sessn)
-        assert resp.status_code == success_status
+    with RequestsMock() as get_resp:
+        get_resp.add(GET, url=url_w_args, status=success_status)
+
+        resp = test_endpoint.get(session=sessn, qs_args={arg_key: arg_value})
+        assert resp.request.url.replace('/?', '?') == url_w_args  # Account for resp URL format
