@@ -87,3 +87,13 @@ def test_endpoint_requests():
 
         resp = test_endpoint.delete()
         assert resp.status_code == success_status
+
+def test_endpoint_with_query_string():
+    sessn = Session()
+    test_endpoint = Endpoint(base_url=test_base_url)
+
+    with RequestsMock() as get_resp:
+        get_resp.add(GET, url=test_endpoint.url, status=success_status)
+
+        resp = test_endpoint.get(session=sessn)
+        assert resp.status_code == success_status

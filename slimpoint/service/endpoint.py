@@ -1,3 +1,5 @@
+from urllib.parse import urlencode
+
 from slimpoint.request import validated_request
 
 
@@ -27,27 +29,39 @@ class Endpoint(object):
         url = self.base_url + self.path
         return url
 
-    def get(self, *args, expect=200, **kwargs):
-        return self._request(method='get', *args, expect=expect, **kwargs)
+    def get(self, *args, qs_args=None, expect=200, **kwargs):
+        return self._request(method='get', *args, qs_args=None, expect=expect, **kwargs)
 
-    def post(self, *args, expect=200, **kwargs):
-        return self._request(method='post', *args, expect=expect, **kwargs)
+    def post(self, *args, qs_args=None, expect=200, **kwargs):
+        return self._request(method='post', *args, qs_args=None, expect=expect, **kwargs)
 
-    def put(self, *args, expect=200, **kwargs):
-        return self._request(method='put', *args, expect=expect, **kwargs)
+    def put(self, *args, qs_args=None, expect=200, **kwargs):
+        return self._request(method='put', *args, qs_args=None, expect=expect, **kwargs)
 
-    def patch(self, *args, expect=200, **kwargs):
-        return self._request(method='patch', *args, expect=expect, **kwargs)
+    def patch(self, *args, qs_args=None, expect=200, **kwargs):
+        return self._request(method='patch', *args, qs_args=None, expect=expect, **kwargs)
 
-    def delete(self, *args, expect=200, **kwargs):
-        return self._request(method='delete', *args, expect=expect, **kwargs)
+    def delete(self, *args, qs_args=None, expect=200, **kwargs):
+        return self._request(method='delete', *args, qs_args=None, expect=expect, **kwargs)
 
-    def _request(self, method, *args, **kwargs):
+    def _request(self, method, *args, qs_args, **kwargs):
+        url = self._url_with_query_string(qs_args) if qs_args else self.url
         resp = validated_request(
-            url=self.url,
+            url=url,
             method=method,
             *args,
             **kwargs
         )
 
         return resp
+
+    def _url_with_query_string(self, qs_args):
+        """Appends query string arguments to URL
+
+        Args:
+            qa_args (dict): Map of query string args as key-value pairs
+        """
+
+        query_string = urlencode(qs_args)
+        url_with_qs = f"{self.url}?{query_string}"
+        return url_with_qs
