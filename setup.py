@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='slimpoint',
-    version='1.0.3',
+    version='1.0.4',
     description='Slim, readable, expressive interactions with backend services',
     author='Brandon Blair',
     author_email='cbrandon.blair@gmail.com',
