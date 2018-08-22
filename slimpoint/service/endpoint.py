@@ -63,5 +63,5 @@ class Endpoint(object):
         """
 
         query_string = urlencode(qs_args)
-        url_with_qs = f"{self.url}?{query_string}"
+        url_with_qs = "{}?{}".format(self.url, query_string)
         return url_with_qs
